@@ -3,8 +3,8 @@
 <div align="center">
 
 ![SnapGrid Banner](https://img.shields.io/badge/SnapGrid-Photo%20Arranger-blue?style=for-the-badge)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red?style=for-the-badge)]()
+<!-- [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE) -->
+<!-- [![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red?style=for-the-badge)]() -->
 
 **Drag, Drop & Arrange Your Photos with Ease**
 
@@ -206,8 +206,8 @@ photo-arranger/
 │
 ├── index.html          # Main application file
 ├── README.md           # This file
-├── input/              # Default input folder
-├── output/             # Default output folder
+├── input/              # Default input folder (Create it)
+├── output/             # Default output folder (Create it)
 ├── application.py      # Python utilities (optional)
 └── main.py            # Python utilities (optional)
 ```
@@ -261,28 +261,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **TusharNeje** ([@TusharNeje](https://github.com/TusharNeje))
 
-## 🙏 Acknowledgments
-
-- PDF-lib for PDF generation capabilities
-- Bootstrap team for the excellent UI framework
-- All contributors and users of SnapGrid
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/TusharNeje/photo-arranger/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/TusharNeje/photo-arranger/discussions)
-- **Email**: your.email@example.com
-
-## ⭐ Show Your Support
-
-If you find this project helpful, please consider giving it a star on GitHub!
-
 ---
 
-<div align="center">
+<div align="center"><br>
 
 **Made with ❤️ by [@TusharNeje](https://github.com/TusharNeje)**
 
-*Document Generated Programmatically via SnapGrid*
 
 </div>
