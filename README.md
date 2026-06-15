@@ -265,7 +265,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center"><br>
 
-**Made with ❤️ by [@TusharNeje](https://github.com/TusharNeje)**
+**Made with ❤️ by [@TusharNeje](https://github.com/tusharneje-07)**
 
 
 </div>
