@@ -1124,6 +1124,36 @@
             background: rgba(59, 130, 246, 0.02);
         }
 
+        .date-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            background: transparent;
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            text-align: right;
+            outline: none;
+            transition: all 0.3s ease;
+            white-space: pre-wrap;
+            word-break: break-word;
+            min-height: 38px;
+        }
+
+        .date-input:focus {
+            border-color: var(--accent-primary);
+            border-style: solid;
+            background: rgba(59, 130, 246, 0.02);
+        }
+
+        .date-input:empty::before {
+            content: attr(data-placeholder);
+            color: #999;
+            font-style: italic;
+        }
+
         /* Text Formatting Controls */
         .text-controls {
             display: flex;
@@ -1279,6 +1309,45 @@
                 transform-origin: top center;
             }
         }
+
+        /* Custom Range Slider */
+        .form-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+        }
+        .form-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+            border: none;
+        }
+        .form-range::-webkit-slider-thumb:hover {
+            background: var(--accent-hover);
+        }
+        .form-range::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+            border: none;
+        }
+        .form-range::-moz-range-thumb:hover {
+            background: var(--accent-hover);
+        }
     </style>
 </head>
 
@@ -1314,11 +1383,28 @@
                 </div>
 
                 <!-- Page Margins -->
-                <div class="spacing-grid-3">
-                    <div class="input-group-custom">
-                        <label class="form-label">Page Margin</label>
-                        <input type="number" class="form-control" id="pageMargin" value="20" min="0" max="100">
+                <div class="mb-3">
+                    <label class="form-label">Page Margins (px)</label>
+                    <div class="spacing-grid">
+                        <div class="input-group-custom">
+                            <label class="form-label">Top</label>
+                            <input type="number" class="form-control" id="pageMarginTop" value="20" min="0" max="100">
+                        </div>
+                        <div class="input-group-custom">
+                            <label class="form-label">Bottom</label>
+                            <input type="number" class="form-control" id="pageMarginBottom" value="20" min="0" max="100">
+                        </div>
+                        <div class="input-group-custom">
+                            <label class="form-label">Left</label>
+                            <input type="number" class="form-control" id="pageMarginLeft" value="20" min="0" max="100">
+                        </div>
+                        <div class="input-group-custom">
+                            <label class="form-label">Right</label>
+                            <input type="number" class="form-control" id="pageMarginRight" value="20" min="0" max="100">
+                        </div>
                     </div>
+                </div>
+                <div class="spacing-grid mb-0">
                     <div class="input-group-custom">
                         <label class="form-label">Row Spacing</label>
                         <input type="number" class="form-control" id="gridRowSpacing" value="10" min="0" max="50">
@@ -1494,6 +1580,16 @@
                         </div>
                     </div>
                     
+                    <!-- Width Settings -->
+                    <div class="text-control-row">
+                        <div class="text-control-group w-100 align-items-center">
+                            <label style="min-width: 50px;">Width</label>
+                            <input type="number" class="text-input-small" id="titleWidth" value="100" min="10" max="100" style="width: 50px;">
+                            <span style="color: var(--text-secondary); font-size: 0.75rem; margin-right: 10px;">%</span>
+                            <input type="range" class="form-range flex-grow-1" id="titleWidthSlider" value="100" min="10" max="100">
+                        </div>
+                    </div>
+                    
                     <!-- Style Buttons -->
                     <div class="text-control-row">
                         <button class="text-btn" id="titleBold" title="Bold">
@@ -1515,6 +1611,108 @@
                             <i class="bi bi-text-center"></i>
                         </button>
                         <button class="text-btn" id="titleAlignRight" title="Align Right">
+                            <i class="bi bi-text-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Settings Section -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="bi bi-calendar-event"></i>
+                    Date Settings
+                </div>
+                
+                <div class="text-controls">
+                    <!-- Font Family -->
+                    <div class="text-control-row">
+                        <select class="text-select flex-grow-1" id="dateFontFamily">
+                            <option value="'Noto Sans Devanagari', sans-serif">Noto Sans Devanagari</option>
+                            <option value="'Akshar', sans-serif">Akshar</option>
+                            <option value="'Anek Devanagari', sans-serif">Anek Devanagari</option>
+                            <option value="'Baloo 2', sans-serif">Baloo 2</option>
+                            <option value="'Eczar', serif">Eczar</option>
+                            <option value="'Google Sans', 'Open Sans', sans-serif">Google Sans</option>
+                            <option value="'Noto Sans', sans-serif">Noto Sans</option>
+                            <option value="'Noto Serif Devanagari', serif">Noto Serif Devanagari</option>
+                            <option value="'Inter', sans-serif">Inter</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="Tahoma, sans-serif">Tahoma</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Size and Color -->
+                    <div class="text-control-row">
+                        <div class="text-control-group">
+                            <label>Size</label>
+                            <input type="number" class="text-input-small" id="dateFontSize" value="14" min="8" max="72">
+                            <span style="color: var(--text-secondary); font-size: 0.75rem;">px</span>
+                        </div>
+                        
+                        <div class="control-divider"></div>
+                        
+                        <div class="text-control-group">
+                            <label>Color</label>
+                            <div class="color-picker-wrapper">
+                                <div class="color-picker-btn">
+                                    <div class="color-preview" id="dateColorPreview" style="background: #333333;"></div>
+                                </div>
+                                <input type="color" class="color-picker-input" id="dateColor" value="#333333">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Date Box Independent Margins -->
+                    <div class="mb-2">
+                        <label class="form-label" style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Box Position (px)</label>
+                        <div class="spacing-grid">
+                            <div class="input-group-custom">
+                                <label class="form-label">Top</label>
+                                <input type="number" class="form-control" id="dateMarginTop" value="16" min="0" max="500">
+                            </div>
+                            <div class="input-group-custom">
+                                <label class="form-label">Right</label>
+                                <input type="number" class="form-control" id="dateMarginRight" value="16" min="0" max="500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Width Settings -->
+                    <div class="text-control-row">
+                        <div class="text-control-group w-100 align-items-center">
+                            <label style="min-width: 50px;">Width</label>
+                            <input type="number" class="text-input-small" id="dateWidth" value="25" min="10" max="100" style="width: 50px;">
+                            <span style="color: var(--text-secondary); font-size: 0.75rem; margin-right: 10px;">%</span>
+                            <input type="range" class="form-range flex-grow-1" id="dateWidthSlider" value="25" min="10" max="100">
+                        </div>
+                    </div>
+                    
+                    <!-- Style Buttons -->
+                    <div class="text-control-row">
+                        <button class="text-btn" id="dateBold" title="Bold">
+                            <i class="bi bi-type-bold"></i>
+                        </button>
+                        <button class="text-btn" id="dateItalic" title="Italic">
+                            <i class="bi bi-type-italic"></i>
+                        </button>
+                        <button class="text-btn" id="dateUnderline" title="Underline">
+                            <i class="bi bi-type-underline"></i>
+                        </button>
+                        
+                        <div class="control-divider"></div>
+                        
+                        <button class="text-btn" id="dateAlignLeft" title="Align Left">
+                            <i class="bi bi-text-left"></i>
+                        </button>
+                        <button class="text-btn" id="dateAlignCenter" title="Align Center">
+                            <i class="bi bi-text-center"></i>
+                        </button>
+                        <button class="text-btn active" id="dateAlignRight" title="Align Right">
                             <i class="bi bi-text-right"></i>
                         </button>
                     </div>
@@ -1568,6 +1766,16 @@
                                 </div>
                                 <input type="color" class="color-picker-input" id="captionColor" value="#555555">
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Width Settings -->
+                    <div class="text-control-row">
+                        <div class="text-control-group w-100 align-items-center">
+                            <label style="min-width: 50px;">Width</label>
+                            <input type="number" class="text-input-small" id="captionWidth" value="100" min="10" max="100" style="width: 50px;">
+                            <span style="color: var(--text-secondary); font-size: 0.75rem; margin-right: 10px;">%</span>
+                            <input type="range" class="form-range flex-grow-1" id="captionWidthSlider" value="100" min="10" max="100">
                         </div>
                     </div>
                     
@@ -1645,6 +1853,16 @@
                                 </div>
                                 <input type="color" class="color-picker-input" id="overviewColor" value="#444444">
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Width Settings -->
+                    <div class="text-control-row">
+                        <div class="text-control-group w-100 align-items-center">
+                            <label style="min-width: 50px;">Width</label>
+                            <input type="number" class="text-input-small" id="overviewWidth" value="100" min="10" max="100" style="width: 50px;">
+                            <span style="color: var(--text-secondary); font-size: 0.75rem; margin-right: 10px;">%</span>
+                            <input type="range" class="form-range flex-grow-1" id="overviewWidthSlider" value="100" min="10" max="100">
                         </div>
                     </div>
                     
@@ -1973,7 +2191,10 @@
         // ==================== STATE MANAGEMENT ====================
         const state = {
             orientation: 'landscape',
-            pageMargin: 20,
+            pageMarginTop: 20,
+            pageMarginBottom: 20,
+            pageMarginLeft: 20,
+            pageMarginRight: 20,
             gridRowSpacing: 10,
             gridColSpacing: 10,
             rows: 2,
@@ -1997,7 +2218,8 @@
                 bold: false,
                 italic: false,
                 underline: false,
-                align: 'center'
+                align: 'center',
+                width: 100
             },
             
             // Caption settings (applies to all captions)
@@ -2008,7 +2230,8 @@
                 bold: false,
                 italic: false,
                 underline: false,
-                align: 'center'
+                align: 'center',
+                width: 100
             },
             
             // Overview caption settings
@@ -2020,7 +2243,23 @@
                 bold: false,
                 italic: false,
                 underline: false,
-                align: 'center'
+                align: 'center',
+                width: 100
+            },
+            
+            // Date settings
+            date: {
+                text: '',
+                fontFamily: "'Noto Sans Devanagari', sans-serif",
+                fontSize: 14,
+                color: '#333333',
+                bold: false,
+                italic: false,
+                underline: false,
+                align: 'right',
+                width: 25,
+                marginTop: 16,
+                marginRight: 16
             }
         };
 
@@ -2033,7 +2272,10 @@
             emptyState: document.getElementById('emptyState'),
             portraitBtn: document.getElementById('portraitBtn'),
             landscapeBtn: document.getElementById('landscapeBtn'),
-            pageMargin: document.getElementById('pageMargin'),
+            pageMarginTop: document.getElementById('pageMarginTop'),
+            pageMarginBottom: document.getElementById('pageMarginBottom'),
+            pageMarginLeft: document.getElementById('pageMarginLeft'),
+            pageMarginRight: document.getElementById('pageMarginRight'),
             gridRowSpacing: document.getElementById('gridRowSpacing'),
             gridColSpacing: document.getElementById('gridColSpacing'),
             gridRows: document.getElementById('gridRows'),
@@ -2082,8 +2324,20 @@
         elements.landscapeBtn.addEventListener('click', () => setOrientation('landscape'));
 
         // ==================== INPUT HANDLERS ====================
-        elements.pageMargin.addEventListener('change', (e) => {
-            state.pageMargin = parseInt(e.target.value) || 20;
+        elements.pageMarginTop.addEventListener('change', (e) => {
+            state.pageMarginTop = parseInt(e.target.value) || 20;
+            buildArtboard();
+        });
+        elements.pageMarginBottom.addEventListener('change', (e) => {
+            state.pageMarginBottom = parseInt(e.target.value) || 20;
+            buildArtboard();
+        });
+        elements.pageMarginLeft.addEventListener('change', (e) => {
+            state.pageMarginLeft = parseInt(e.target.value) || 20;
+            buildArtboard();
+        });
+        elements.pageMarginRight.addEventListener('change', (e) => {
+            state.pageMarginRight = parseInt(e.target.value) || 20;
             buildArtboard();
         });
 
@@ -2215,6 +2469,19 @@
         titleControls.alignCenter.addEventListener('click', () => setTitleAlign('center'));
         titleControls.alignRight.addEventListener('click', () => setTitleAlign('right'));
 
+        // Title Width controls
+        const titleWidth = document.getElementById('titleWidth');
+        const titleWidthSlider = document.getElementById('titleWidthSlider');
+        
+        function updateTitleWidth(val) {
+            state.title.width = parseInt(val) || 100;
+            titleWidth.value = state.title.width;
+            titleWidthSlider.value = state.title.width;
+            applyTitleStyles();
+        }
+        titleWidth.addEventListener('input', (e) => updateTitleWidth(e.target.value));
+        titleWidthSlider.addEventListener('input', (e) => updateTitleWidth(e.target.value));
+
         // Apply title styles to the input
         function applyTitleStyles() {
             const titleInput = document.getElementById('artboardTitle');
@@ -2226,6 +2493,133 @@
                 titleInput.style.fontStyle = state.title.italic ? 'italic' : 'normal';
                 titleInput.style.textDecoration = state.title.underline ? 'underline' : 'none';
                 titleInput.style.textAlign = state.title.align;
+                
+                titleInput.style.width = (state.title.width || 100) + '%';
+                if (state.title.align === 'center') {
+                    titleInput.style.marginLeft = 'auto';
+                    titleInput.style.marginRight = 'auto';
+                } else if (state.title.align === 'left') {
+                    titleInput.style.marginLeft = '0';
+                    titleInput.style.marginRight = 'auto';
+                } else if (state.title.align === 'right') {
+                    titleInput.style.marginLeft = 'auto';
+                    titleInput.style.marginRight = '0';
+                }
+            }
+            saveToLocalStorage();
+        }
+
+        // ==================== DATE CONTROLS ====================
+        const dateControls = {
+            fontFamily: document.getElementById('dateFontFamily'),
+            fontSize: document.getElementById('dateFontSize'),
+            color: document.getElementById('dateColor'),
+            colorPreview: document.getElementById('dateColorPreview'),
+            bold: document.getElementById('dateBold'),
+            italic: document.getElementById('dateItalic'),
+            underline: document.getElementById('dateUnderline'),
+            alignLeft: document.getElementById('dateAlignLeft'),
+            alignCenter: document.getElementById('dateAlignCenter'),
+            alignRight: document.getElementById('dateAlignRight')
+        };
+
+        // Font Family
+        dateControls.fontFamily.addEventListener('change', (e) => {
+            state.date.fontFamily = e.target.value;
+            applyDateStyles();
+        });
+
+        // Font Size
+        dateControls.fontSize.addEventListener('change', (e) => {
+            state.date.fontSize = parseInt(e.target.value) || 14;
+            applyDateStyles();
+        });
+
+        // Color
+        dateControls.color.addEventListener('input', (e) => {
+            state.date.color = e.target.value;
+            dateControls.colorPreview.style.background = e.target.value;
+            applyDateStyles();
+        });
+
+        // Bold
+        dateControls.bold.addEventListener('click', () => {
+            state.date.bold = !state.date.bold;
+            dateControls.bold.classList.toggle('active', state.date.bold);
+            applyDateStyles();
+        });
+
+        // Italic
+        dateControls.italic.addEventListener('click', () => {
+            state.date.italic = !state.date.italic;
+            dateControls.italic.classList.toggle('active', state.date.italic);
+            applyDateStyles();
+        });
+
+        // Underline
+        dateControls.underline.addEventListener('click', () => {
+            state.date.underline = !state.date.underline;
+            dateControls.underline.classList.toggle('active', state.date.underline);
+            applyDateStyles();
+        });
+
+        // Alignment
+        function setDateAlign(align) {
+            state.date.align = align;
+            dateControls.alignLeft.classList.toggle('active', align === 'left');
+            dateControls.alignCenter.classList.toggle('active', align === 'center');
+            dateControls.alignRight.classList.toggle('active', align === 'right');
+            applyDateStyles();
+        }
+
+        dateControls.alignLeft.addEventListener('click', () => setDateAlign('left'));
+        dateControls.alignCenter.addEventListener('click', () => setDateAlign('center'));
+        dateControls.alignRight.addEventListener('click', () => setDateAlign('right'));
+
+        // Date independent margin controls
+        document.getElementById('dateMarginTop').addEventListener('input', (e) => {
+            state.date.marginTop = parseInt(e.target.value) || 0;
+            const dateBox = document.querySelector('.artboard-date-box');
+            if (dateBox) dateBox.style.top = state.date.marginTop + 'px';
+            saveToLocalStorage();
+        });
+        document.getElementById('dateMarginRight').addEventListener('input', (e) => {
+            state.date.marginRight = parseInt(e.target.value) || 0;
+            const dateBox = document.querySelector('.artboard-date-box');
+            if (dateBox) dateBox.style.right = state.date.marginRight + 'px';
+            saveToLocalStorage();
+        });
+
+        // Date Width controls
+        const dateWidth = document.getElementById('dateWidth');
+        const dateWidthSlider = document.getElementById('dateWidthSlider');
+        
+        function updateDateWidth(val) {
+            state.date.width = parseInt(val) || 25;
+            dateWidth.value = state.date.width;
+            dateWidthSlider.value = state.date.width;
+            applyDateStyles();
+        }
+        dateWidth.addEventListener('input', (e) => updateDateWidth(e.target.value));
+        dateWidthSlider.addEventListener('input', (e) => updateDateWidth(e.target.value));
+
+        // Apply date styles to the input
+        function applyDateStyles() {
+            const dateInput = document.getElementById('artboardDate');
+            if (dateInput) {
+                dateInput.style.fontFamily = state.date.fontFamily;
+                dateInput.style.fontSize = state.date.fontSize + 'px';
+                dateInput.style.color = state.date.color;
+                dateInput.style.fontWeight = state.date.bold ? '700' : '400';
+                dateInput.style.fontStyle = state.date.italic ? 'italic' : 'normal';
+                dateInput.style.textDecoration = state.date.underline ? 'underline' : 'none';
+                dateInput.style.textAlign = state.date.align;
+                
+                // Update parent container width
+                const dateBox = dateInput.parentElement;
+                if (dateBox && dateBox.classList.contains('artboard-date-box')) {
+                    dateBox.style.width = (state.date.width || 25) + '%';
+                }
             }
             saveToLocalStorage();
         }
@@ -2297,6 +2691,19 @@
         captionControls.alignCenter.addEventListener('click', () => setCaptionAlign('center'));
         captionControls.alignRight.addEventListener('click', () => setCaptionAlign('right'));
 
+        // Caption Width controls
+        const captionWidth = document.getElementById('captionWidth');
+        const captionWidthSlider = document.getElementById('captionWidthSlider');
+        
+        function updateCaptionWidth(val) {
+            state.caption.width = parseInt(val) || 100;
+            captionWidth.value = state.caption.width;
+            captionWidthSlider.value = state.caption.width;
+            applyCaptionStyles();
+        }
+        captionWidth.addEventListener('input', (e) => updateCaptionWidth(e.target.value));
+        captionWidthSlider.addEventListener('input', (e) => updateCaptionWidth(e.target.value));
+
         // Apply caption styles to all caption inputs
         function applyCaptionStyles() {
             document.querySelectorAll('.grid-caption-input').forEach(input => {
@@ -2307,6 +2714,17 @@
                 input.style.fontStyle = state.caption.italic ? 'italic' : 'normal';
                 input.style.textDecoration = state.caption.underline ? 'underline' : 'none';
                 input.style.textAlign = state.caption.align;
+                input.style.width = (state.caption.width || 100) + '%';
+                if (state.caption.align === 'center') {
+                    input.style.marginLeft = 'auto';
+                    input.style.marginRight = 'auto';
+                } else if (state.caption.align === 'left') {
+                    input.style.marginLeft = '0';
+                    input.style.marginRight = 'auto';
+                } else if (state.caption.align === 'right') {
+                    input.style.marginLeft = 'auto';
+                    input.style.marginRight = '0';
+                }
             });
             saveToLocalStorage();
         }
@@ -2378,6 +2796,19 @@
         overviewControls.alignCenter.addEventListener('click', () => setOverviewAlign('center'));
         overviewControls.alignRight.addEventListener('click', () => setOverviewAlign('right'));
 
+        // Overview Width controls
+        const overviewWidth = document.getElementById('overviewWidth');
+        const overviewWidthSlider = document.getElementById('overviewWidthSlider');
+        
+        function updateOverviewWidth(val) {
+            state.overview.width = parseInt(val) || 100;
+            overviewWidth.value = state.overview.width;
+            overviewWidthSlider.value = state.overview.width;
+            applyOverviewStyles();
+        }
+        overviewWidth.addEventListener('input', (e) => updateOverviewWidth(e.target.value));
+        overviewWidthSlider.addEventListener('input', (e) => updateOverviewWidth(e.target.value));
+
         // Apply overview styles to the input
         function applyOverviewStyles() {
             const overviewInput = document.getElementById('artboardOverview');
@@ -2389,6 +2820,18 @@
                 overviewInput.style.fontStyle = state.overview.italic ? 'italic' : 'normal';
                 overviewInput.style.textDecoration = state.overview.underline ? 'underline' : 'none';
                 overviewInput.style.textAlign = state.overview.align;
+                
+                overviewInput.style.width = (state.overview.width || 100) + '%';
+                if (state.overview.align === 'center') {
+                    overviewInput.style.marginLeft = 'auto';
+                    overviewInput.style.marginRight = 'auto';
+                } else if (state.overview.align === 'left') {
+                    overviewInput.style.marginLeft = '0';
+                    overviewInput.style.marginRight = 'auto';
+                } else if (state.overview.align === 'right') {
+                    overviewInput.style.marginLeft = 'auto';
+                    overviewInput.style.marginRight = '0';
+                }
             }
             saveToLocalStorage();
         }
@@ -2519,7 +2962,7 @@
         // ==================== ARTBOARD BUILDING ====================
         function buildArtboard() {
             // Update content padding based on page margin
-            elements.artboardContent.style.padding = `${state.pageMargin}px`;
+            elements.artboardContent.style.padding = `${state.pageMarginTop}px ${state.pageMarginRight}px ${state.pageMarginBottom}px ${state.pageMarginLeft}px`;
             
             // Clear existing content
             elements.artboardContent.innerHTML = '';
@@ -2552,6 +2995,19 @@
             titleInput.style.textDecoration = state.title.underline ? 'underline' : 'none';
             titleInput.style.textAlign = state.title.align;
             
+            // Apply custom width and alignment
+            titleInput.style.width = (state.title.width || 100) + '%';
+            if (state.title.align === 'center') {
+                titleInput.style.marginLeft = 'auto';
+                titleInput.style.marginRight = 'auto';
+            } else if (state.title.align === 'left') {
+                titleInput.style.marginLeft = '0';
+                titleInput.style.marginRight = 'auto';
+            } else if (state.title.align === 'right') {
+                titleInput.style.marginLeft = 'auto';
+                titleInput.style.marginRight = '0';
+            }
+            
             // Auto-resize natively via contenteditable
             titleInput.addEventListener('input', function() {
                 state.title.text = this.innerHTML;
@@ -2565,6 +3021,47 @@
             
             titleBar.appendChild(titleInput);
             elements.artboardContent.appendChild(titleBar);
+            
+            // ===== CREATE DATE BOX =====
+            // Positioned absolutely — uses ONLY its own independent margins,
+            // completely unaffected by page margins or text margins.
+            const dateBox = document.createElement('div');
+            dateBox.className = 'artboard-date-box';
+            dateBox.style.position = 'absolute';
+            dateBox.style.top = `${state.date.marginTop}px`;
+            dateBox.style.right = `${state.date.marginRight}px`;
+            dateBox.style.width = (state.date.width || 25) + '%';
+            dateBox.style.zIndex = '20';
+            
+            const dateInput = document.createElement('div');
+            dateInput.contentEditable = "true";
+            dateInput.id = 'artboardDate';
+            dateInput.className = 'date-input';
+            dateInput.dataset.placeholder = 'Enter date... / दिनांक...';
+            dateInput.innerHTML = state.date.text;
+            
+            // Apply saved styles
+            dateInput.style.fontFamily = state.date.fontFamily;
+            dateInput.style.fontSize = state.date.fontSize + 'px';
+            dateInput.style.color = state.date.color;
+            dateInput.style.fontWeight = state.date.bold ? '700' : '400';
+            dateInput.style.fontStyle = state.date.italic ? 'italic' : 'normal';
+            dateInput.style.textDecoration = state.date.underline ? 'underline' : 'none';
+            dateInput.style.textAlign = state.date.align;
+            
+            // Save state on edit
+            dateInput.addEventListener('input', function() {
+                state.date.text = this.innerHTML;
+            });
+            dateInput.addEventListener('blur', function() {
+                if (this.innerText.includes('<') && this.innerText.includes('>')) {
+                    this.innerHTML = this.innerText;
+                }
+                state.date.text = this.innerHTML;
+            });
+            
+            dateBox.appendChild(dateInput);
+            elements.artboardContent.appendChild(dateBox);
             
             // ===== CREATE GRID CONTAINER =====
             const gridContainer = document.createElement('div');
@@ -2611,6 +3108,19 @@
                     captionInput.style.textDecoration = state.caption.underline ? 'underline' : 'none';
                     captionInput.style.textAlign = state.caption.align;
                     
+                    // Apply custom width and alignment
+                    captionInput.style.width = (state.caption.width || 100) + '%';
+                    if (state.caption.align === 'center') {
+                        captionInput.style.marginLeft = 'auto';
+                        captionInput.style.marginRight = 'auto';
+                    } else if (state.caption.align === 'left') {
+                        captionInput.style.marginLeft = '0';
+                        captionInput.style.marginRight = 'auto';
+                    } else if (state.caption.align === 'right') {
+                        captionInput.style.marginLeft = 'auto';
+                        captionInput.style.marginRight = '0';
+                    }
+                    
                     // Save text
                     captionInput.addEventListener('input', function() {
                         state.gridCaptions[parseInt(this.dataset.slotIndex)] = this.innerHTML;
@@ -2655,6 +3165,19 @@
             overviewInput.style.fontStyle = state.overview.italic ? 'italic' : 'normal';
             overviewInput.style.textDecoration = state.overview.underline ? 'underline' : 'none';
             overviewInput.style.textAlign = state.overview.align;
+            
+            // Apply custom width and alignment
+            overviewInput.style.width = (state.overview.width || 100) + '%';
+            if (state.overview.align === 'center') {
+                overviewInput.style.marginLeft = 'auto';
+                overviewInput.style.marginRight = 'auto';
+            } else if (state.overview.align === 'left') {
+                overviewInput.style.marginLeft = '0';
+                overviewInput.style.marginRight = 'auto';
+            } else if (state.overview.align === 'right') {
+                overviewInput.style.marginLeft = 'auto';
+                overviewInput.style.marginRight = '0';
+            }
             
             // Save state
             overviewInput.addEventListener('input', function() {
@@ -3348,7 +3871,10 @@
         function saveToLocalStorage() {
             const dataToSave = {
                 orientation: state.orientation,
-                pageMargin: state.pageMargin,
+                pageMarginTop: state.pageMarginTop,
+                pageMarginBottom: state.pageMarginBottom,
+                pageMarginLeft: state.pageMarginLeft,
+                pageMarginRight: state.pageMarginRight,
                 gridRowSpacing: state.gridRowSpacing,
                 gridColSpacing: state.gridColSpacing,
                 rows: state.rows,
@@ -3361,7 +3887,8 @@
                 textMarginLR: state.textMarginLR,
                 title: { ...state.title },
                 caption: { ...state.caption },
-                overview: { ...state.overview }
+                overview: { ...state.overview },
+                date: { ...state.date }
             };
             
             try {
@@ -3379,7 +3906,20 @@
                     
                     // Restore state values
                     if (data.orientation) state.orientation = data.orientation;
-                    if (data.pageMargin !== undefined) state.pageMargin = data.pageMargin;
+                    
+                    // Compatibility for page margins
+                    if (data.pageMarginTop !== undefined) state.pageMarginTop = data.pageMarginTop;
+                    else if (data.pageMargin !== undefined) state.pageMarginTop = data.pageMargin;
+                    
+                    if (data.pageMarginBottom !== undefined) state.pageMarginBottom = data.pageMarginBottom;
+                    else if (data.pageMargin !== undefined) state.pageMarginBottom = data.pageMargin;
+                    
+                    if (data.pageMarginLeft !== undefined) state.pageMarginLeft = data.pageMarginLeft;
+                    else if (data.pageMargin !== undefined) state.pageMarginLeft = data.pageMargin;
+                    
+                    if (data.pageMarginRight !== undefined) state.pageMarginRight = data.pageMarginRight;
+                    else if (data.pageMargin !== undefined) state.pageMarginRight = data.pageMargin;
+
                     if (data.gridRowSpacing !== undefined) state.gridRowSpacing = data.gridRowSpacing;
                     else if (data.gridSpacing !== undefined) {
                         state.gridRowSpacing = data.gridSpacing;
@@ -3410,6 +3950,11 @@
                         Object.assign(state.overview, data.overview);
                     }
                     
+                    // Restore date settings
+                    if (data.date) {
+                        Object.assign(state.date, data.date);
+                    }
+                    
                     return true;
                 }
             } catch (e) {
@@ -3424,7 +3969,10 @@
             elements.landscapeBtn.classList.toggle('active', state.orientation === 'landscape');
             
             // Apply margin and spacing inputs
-            elements.pageMargin.value = state.pageMargin;
+            elements.pageMarginTop.value = state.pageMarginTop;
+            elements.pageMarginBottom.value = state.pageMarginBottom;
+            elements.pageMarginLeft.value = state.pageMarginLeft;
+            elements.pageMarginRight.value = state.pageMarginRight;
             elements.gridRowSpacing.value = state.gridRowSpacing;
             elements.gridColSpacing.value = state.gridColSpacing;
             elements.textMarginTB.value = state.textMarginTB;
@@ -3454,6 +4002,38 @@
             titleControls.alignCenter.classList.toggle('active', state.title.align === 'center');
             titleControls.alignRight.classList.toggle('active', state.title.align === 'right');
             
+            const titleWidth = document.getElementById('titleWidth');
+            const titleWidthSlider = document.getElementById('titleWidthSlider');
+            if (titleWidth && titleWidthSlider) {
+                titleWidth.value = state.title.width || 100;
+                titleWidthSlider.value = state.title.width || 100;
+            }
+            
+            // Apply date settings
+            dateControls.fontFamily.value = state.date.fontFamily;
+            dateControls.fontSize.value = state.date.fontSize;
+            dateControls.color.value = state.date.color;
+            dateControls.colorPreview.style.background = state.date.color;
+            dateControls.bold.classList.toggle('active', state.date.bold);
+            dateControls.italic.classList.toggle('active', state.date.italic);
+            dateControls.underline.classList.toggle('active', state.date.underline);
+            dateControls.alignLeft.classList.toggle('active', state.date.align === 'left');
+            dateControls.alignCenter.classList.toggle('active', state.date.align === 'center');
+            dateControls.alignRight.classList.toggle('active', state.date.align === 'right');
+            
+            const dateWidthInput = document.getElementById('dateWidth');
+            const dateWidthSliderInput = document.getElementById('dateWidthSlider');
+            if (dateWidthInput && dateWidthSliderInput) {
+                dateWidthInput.value = state.date.width || 25;
+                dateWidthSliderInput.value = state.date.width || 25;
+            }
+
+            // Apply date independent margins
+            const dateMarginTopEl = document.getElementById('dateMarginTop');
+            const dateMarginRightEl = document.getElementById('dateMarginRight');
+            if (dateMarginTopEl) dateMarginTopEl.value = state.date.marginTop ?? 16;
+            if (dateMarginRightEl) dateMarginRightEl.value = state.date.marginRight ?? 16;
+
             // Apply caption settings
             captionControls.fontFamily.value = state.caption.fontFamily;
             captionControls.fontSize.value = state.caption.fontSize;
@@ -3466,6 +4046,13 @@
             captionControls.alignCenter.classList.toggle('active', state.caption.align === 'center');
             captionControls.alignRight.classList.toggle('active', state.caption.align === 'right');
             
+            const captionWidth = document.getElementById('captionWidth');
+            const captionWidthSlider = document.getElementById('captionWidthSlider');
+            if (captionWidth && captionWidthSlider) {
+                captionWidth.value = state.caption.width || 100;
+                captionWidthSlider.value = state.caption.width || 100;
+            }
+            
             // Apply overview settings
             overviewControls.fontFamily.value = state.overview.fontFamily;
             overviewControls.fontSize.value = state.overview.fontSize;
@@ -3477,6 +4064,13 @@
             overviewControls.alignLeft.classList.toggle('active', state.overview.align === 'left');
             overviewControls.alignCenter.classList.toggle('active', state.overview.align === 'center');
             overviewControls.alignRight.classList.toggle('active', state.overview.align === 'right');
+            
+            const overviewWidth = document.getElementById('overviewWidth');
+            const overviewWidthSlider = document.getElementById('overviewWidthSlider');
+            if (overviewWidth && overviewWidthSlider) {
+                overviewWidth.value = state.overview.width || 100;
+                overviewWidthSlider.value = state.overview.width || 100;
+            }
         }
 
         // ==================== INITIALIZATION ====================
@@ -3575,7 +4169,7 @@
             }
             
             // Clean up inputs and hide empty captions to cancel out structural space
-            const editableInputs = artboard.querySelectorAll('.title-input, .grid-caption-input, .overview-caption-input');
+            const editableInputs = artboard.querySelectorAll('.title-input, .grid-caption-input, .overview-caption-input, .date-input');
             const originalInputStyles = [];
             
             editableInputs.forEach(el => {
